@@ -320,6 +320,7 @@ protected:
   void SStopSound(CActiveAESound *sound);
   void DiscardSound(CActiveAESound *sound);
   void ChangeResamplers();
+  void ChangeADSP();
 
   bool RunStages();
   bool HasWork();
