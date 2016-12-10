@@ -93,13 +93,13 @@ protected:
 class CActiveAEStreamBuffers
 {
 public:
-  CActiveAEStreamBuffers(AEAudioFormat inputFormat, AEAudioFormat outputFormat, AEQuality quality);
+  CActiveAEStreamBuffers(AEAudioFormat inputFormat, AEAudioFormat outputFormat);
   virtual ~CActiveAEStreamBuffers();
-  bool Create(unsigned int totaltime, bool remap, bool upmix, bool normalize = true, bool useDSP = false, bool bypassDSP = false);
+  bool Create(unsigned int totaltime, bool remap, bool upmix, bool normalize, AEQuality quality, bool forceResample, bool useDSP, bool bypassDSP);
   void SetExtraData(int profile, enum AVMatrixEncoding matrix_encoding, enum AVAudioServiceType audio_service_type);
   bool ProcessBuffers();
   void ConfigureResampler(bool normalizelevels, bool stereoupmix, AEQuality quality);
-  void ConfigureADSP(bool useDSP, bool stereoupmix, AEQuality quality);
+  void ConfigureADSP(bool stereoupmix, AEQuality quality);
   bool HasInputLevel(int level);
   float GetDelay();
   void Flush();
@@ -109,7 +109,6 @@ public:
   double GetRR();
   void FillBuffer();
   bool DoesNormalize();
-  void ForceResampler(bool force);
   bool HasWork();
   CActiveAEBufferPool *GetResampleBuffers();
   CActiveAEBufferPool *GetAtempoBuffers();
@@ -124,7 +123,6 @@ protected:
   CActiveAEBufferPoolResample *m_resampleBuffers;
   CActiveAEBufferPoolAtempo *m_atempoBuffers;
   CActiveAEBufferPoolADSP *m_adspBuffers;
-  bool m_UseADSP;
 };
 
 class CActiveAEStream : public IAEStream
